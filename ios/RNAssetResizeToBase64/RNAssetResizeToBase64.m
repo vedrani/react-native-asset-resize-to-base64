@@ -27,7 +27,17 @@ RCT_EXPORT_METHOD(
 		/*Get the image data and scale it according to Width and Height*/
 		NSData *imagePngRep		= UIImagePNGRepresentation([UIImage imageWithCGImage:imageRef]);
 		UIImage *imageUI		= [UIImage imageWithData:imagePngRep];
-		UIImage *scaledImage	= [imageUI scaleToSize:newSize];
+
+    // crop
+    let imgWidth = imageUI.size.width * imageUI.scale;
+		UIImage *croppedImage = nil;
+		CGRect cropReact = CGRectMake(0.0, 0.0, imgWidth, imgWidth);
+    if ( ( imageUI = CGImageCreateWithImageInRect( croppedImage.CGImage, cropRect ) ) ) {
+        croppedImage = [[[UIImage alloc] initWithCGImage: imageUI] autorelease];
+        CGImageRelease( imageUI );
+    }
+
+		UIImage *scaledImage	= [croppedImage scaleToSize:newSize];
 
 		/*Et the newImageData and transform it to base64*/
 		NSData *ImageData	= UIImagePNGRepresentation(scaledImage);
@@ -43,4 +53,3 @@ RCT_EXPORT_METHOD(
 }
 
 @end
-
