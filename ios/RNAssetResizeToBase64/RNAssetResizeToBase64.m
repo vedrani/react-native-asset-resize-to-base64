@@ -28,14 +28,11 @@ RCT_EXPORT_METHOD(
 		NSData *imagePngRep		= UIImagePNGRepresentation([UIImage imageWithCGImage:imageRef]);
 		UIImage *imageUI		= [UIImage imageWithData:imagePngRep];
 
-    // crop
-    let imgWidth = imageUI.size.width * imageUI.scale;
-		UIImage *croppedImage = nil;
-		CGRect cropReact = CGRectMake(0.0, 0.0, imgWidth, imgWidth);
-    if ( ( imageUI = CGImageCreateWithImageInRect( croppedImage.CGImage, cropRect ) ) ) {
-        croppedImage = [[[UIImage alloc] initWithCGImage: imageUI] autorelease];
-        CGImageRelease( imageUI );
-    }
+		CGFloat imgWidth = imageUI.size.width * imageUI.scale;
+    CGRect cropRect = CGRectMake(0.0, 0.0, imgWidth, imgWidth);
+		CGImageRef imageCropRef = CGImageCreateWithImageInRect([imageUI CGImage], cropRect);
+		UIImage *croppedImage = [UIImage imageWithCGImage:imageCropRef];
+		CGImageRelease(imageCropRef);
 
 		UIImage *scaledImage	= [croppedImage scaleToSize:newSize];
 
