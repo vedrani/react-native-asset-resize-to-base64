@@ -37,7 +37,7 @@ RCT_EXPORT_METHOD(
 		UIImage *scaledImage	= [croppedImage scaleToSize:newSize];
 
 		/*Et the newImageData and transform it to base64*/
-		NSData *ImageData	= UIImagePNGRepresentation(scaledImage);
+		NSData *ImageData	= UIImageJPEGRepresentation(scaledImage, 1.0);
 		NSString *base64Encoded	= [ImageData base64EncodedStringWithOptions:0];
 
 		callback(@[[NSNull null], base64Encoded]);
