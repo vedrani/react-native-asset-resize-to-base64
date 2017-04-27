@@ -53,9 +53,21 @@ public class RNAssetResizeToBase64Module extends ReactContextBaseJavaModule
 
 	private String makeConversion(Bitmap bitmap, int width, int height)
 	{
+    int imgWidth = bitmap.getWidth();
+    int imgHeight = bitmap.getHeight();
+    int imgVericalMiddle = imgHeight / 2;
+    Bitmap croppedBitmap = Bitmap.createBitmap(
+      bitmap,
+      0,
+      imgVericalMiddle - imgWidth / 2,
+      imgWidth,
+      imgWidth
+    );
+
+    Bitmap scaledBitmap = Bitmap.createScaledBitmap(croppedBitmap, width, height, false);
+
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-		bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
-		bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+		scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
 		byte[] byteArray = byteArrayOutputStream.toByteArray();
 		return Base64.encodeToString(byteArray, Base64.DEFAULT);
 	}
