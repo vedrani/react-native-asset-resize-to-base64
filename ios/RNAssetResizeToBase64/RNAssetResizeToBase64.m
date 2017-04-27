@@ -35,7 +35,7 @@ RCT_EXPORT_METHOD(
       0.0,
       imgVericalMiddle - imgWidth / 2,
       imgWidth,
-      imgVericalMiddle + imgWidth / 2
+      imgWidth,
     );
     CGImageRef imageCropRef = CGImageCreateWithImageInRect([imageUI CGImage], cropRect);
     UIImage *croppedImage = [UIImage imageWithCGImage:imageCropRef];
